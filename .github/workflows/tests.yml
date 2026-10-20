@@ -1,0 +1,29 @@
+name: Tests
+on: [push, pull_request]
+jobs:
+  cpu:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12"]
+    env:
+      JAX_PLATFORMS: cpu
+      JAX_ENABLE_X64: "true"
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+      - run: python -m pip install -e ".[dev,nlopt,video]"
+      - run: ruff check src tests examples
+      - run: pytest -q
+      - run: python examples/optimize_square_grid.py --output outputs
+      - run: python examples/boundary_conditions.py --output outputs/boundaries
+      - run: python examples/optimize_objectives.py --objective all --output outputs
+      - run: python examples/optimize_spring_constants.py --parameterization all --output outputs
+      - run: python examples/optimize_all_vertices.py --output outputs
+      - run: python examples/optimize_with_nlopt.py --output outputs
+      - run: python examples/make_video.py --output outputs/compression.gif
+      - run: python examples/verlet_compression.py --output outputs
+      - run: python -m build

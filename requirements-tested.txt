@@ -1,0 +1,10 @@
+# CPU environment used for the packaged validation (Python 3.12, Linux).
+# Optional reproducibility pins; pyproject.toml defines supported dependencies.
+jax==0.8.0
+jaxlib==0.8.0
+jaxopt==0.8.3
+numpy==2.5.4
+scipy==1.18.1
+matplotlib==3.11.2
+nlopt==2.11.0
+pillow==13.0.0

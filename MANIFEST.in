@@ -1,0 +1,9 @@
+include README.md
+recursive-include docs *.md
+recursive-include docs *.png
+recursive-include docs *.svg
+recursive-include docs *.gif
+include requirements-tested.txt
+recursive-include examples *.py *.ipynb
+recursive-include examples *.md
+recursive-include tests *.py
